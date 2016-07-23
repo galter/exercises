@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="beMEAN">
+	<head>
+		<meta charset="UTF-8">
+		<title>be MEAN</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"></link>
+		<style>
+			.wrapper {
+				max-width: 600px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body data-ng-controller="userController as user">
+		<div class="row wrapper">
+			<h1>{{ user.titulo }}</h1>
+
+			<button data-ng-click="user.add()" class="btn btn-large red waves-effect waves-light col s12">ADD USER</button>
+
+			<span data-ng-init="predicate = 'name'; reverse = false; "></span>
+
+			<table class="col s12">
+				<thead>
+					<tr>
+						<th>
+							<label>Busca: <input ng-model="searchUser"></label>
+						</th>
+					</tr>
+					<tr>
+						<th data-ng-repeat="(key, value) in user.users[0]">
+							{{ key }}
+						</th>
+					</tr>	
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="user in user.users | orderBy:predicate:reverse | filter:searchUser">
+						<td data-ng-repeat="(key, value) in user">
+							{{ value }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div data-ng-controller="courseController as course">
+				<h2>{{ course.titulo }}</h2>
+
+				<button data-ng-click="course.add()">ADD CURSO</button>
+
+				<ul>
+					<li data-ng-repeat="course in course.courses">
+						{{ course.name }} - {{ course.teacher }}
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script src="angular.min.js"></script>
+		<script>
+			angular.module("beMEAN", [])
+				.controller('userController', userController)
+				.controller('courseController', courseController);
+
+				function userController() {	
+					var vm = this;
+					vm.titulo = "be MEAN - Usuários";
+					vm.users = [
+						{name: 'suissa', email: 'suissera@manoveio.com'}
+						,{name: 'joão', email: 'joao@maciosedoso.com'}
+						,{name: 'franciele', email: 'fran@quimica.com'}
+					];
+
+					vm.add = add;
+
+					function add() {
+						vm.users.push({name: 'Exemplo', email: 'email@exemplo.com'})  
+					}
+				}
+
+				function courseController() {	
+					var vm = this;
+					vm.titulo = "be MEAN - Cursos";
+					vm.courses = [
+						{name: 'be MEAN', teacher: 'Suissa'}
+						,{name: 'Learning Machine', teacher: 'Ivan Gustavo'}
+						,{name: 'Laravel', teacher: 'Michael Douglas'}
+					];
+
+					vm.add = add;
+
+					function add() {
+						vm.courses.push({name: 'Curso Exemplo', teacher: 'Prof Exemplo'})  
+					}
+				}
+					
+		</script>
+	</body>
+</html>

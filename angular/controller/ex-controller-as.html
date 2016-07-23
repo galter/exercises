@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="beMEAN">
+<head>
+	<meta charset="UTF-8">
+	<title>be MEAN</title>
+</head>
+<body data-ng-controller="userController as user">
+	<h1>{{ user.titulo }}</h1>
+	
+	<ul>
+		<li data-ng-repeat="user in user.users">
+			{{ user.name }} - {{ user.email }}
+		</li>
+	</ul>
+
+	<div data-ng-controller="courseController as course">
+		<h2>{{ course.titulo }}</h2>
+
+		<ul>
+			<li data-ng-repeat="course in course.courses">
+				{{ course.name }} - {{ course.teacher }}
+			</li>
+		</ul>
+	</div>
+
+	<script src="../angular.min.js"></script>
+	<script>
+		angular.module("beMEAN", [])
+			.controller('userController', userController)
+			.controller('courseController', courseController);
+
+			function userController() {	
+				this.titulo = "be MEAN - Usuários";
+				this.users = [
+					{name: 'suissa', email: 'suissera@manoveio.com'}
+					,{name: 'joão', email: 'joao@maciosedoso.com'}
+					,{name: 'franciele', email: 'fran@quimica.com'}
+				];
+			}
+
+			function courseController() {	
+				this.titulo = "be MEAN - Cursos";
+				this.courses = [
+					{name: 'be MEAN', teacher: 'Suissa'}
+					,{name: 'Learning Machine', teacher: 'Ivan Gustavo'}
+					,{name: 'Laravel', teacher: 'Michael Douglas'}
+				];
+			}
+				
+	</script>
+</body>
+</html>

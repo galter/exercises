@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="beMEAN">
+<head>
+	<meta charset="UTF-8">
+	<title>be MEAN</title>
+</head>
+<body data-ng-controller="userController">
+	<h1>{{ titulo }}</h1>
+	
+	<label>Busca: <input ng-model="searchUser"></label>
+
+	<p>
+		<input type="text" data-ng-model="name">
+		<br />
+		<input type="text" data-ng-model="email">
+	</p>
+
+	<button data-ng-click="add()">ADD</button>
+
+	<span data-ng-init="predicate = 'name'; reverse = false; "></span>
+
+	<table>
+		<thead>
+			<tr>
+				<th data-ng-repeat="(key, value) in users[0]">
+					{{ key }}
+				</th>
+			</tr>	
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="user in users | orderBy:predicate:reverse | filter:searchUser">
+				<td data-ng-repeat="(key, value) in user">
+					{{ value }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-ng-controller="courseController">
+		<h2>{{ titulo }}</h2>
+
+		<button data-ng-click="add()">ADD</button>
+
+		<ul>
+			<li data-ng-repeat="course in courses">
+				{{ course.name }} - {{ course.teacher }}
+			</li>
+		</ul>
+	</div>
+
+	<script src="angular.min.js"></script>
+	<script>
+		angular.module("beMEAN", [])
+			.controller('userController', userController)
+			.controller('courseController', courseController);
+
+			function userController($scope) {	
+				$scope.titulo = "be MEAN - Usuários";
+				$scope.users = [
+					{name: 'suissa', email: 'suissera@manoveio.com'}
+					,{name: 'joão', email: 'joao@maciosedoso.com'}
+					,{name: 'franciele', email: 'fran@quimica.com'}
+				];
+
+				$scope.add = add;
+
+				function add() {
+					$scope.users.push({name: $scope.name, email: $scope.email})  
+				}
+			}
+
+			userController.$inject = ['$scope'];
+
+			function courseController($scope) {	
+				$scope.titulo = "be MEAN - Cursos";
+				$scope.courses = [
+					{name: 'be MEAN', teacher: 'Suissa'}
+					,{name: 'Learning Machine', teacher: 'Ivan Gustavo'}
+					,{name: 'Laravel', teacher: 'Michael Douglas'}
+				];
+
+				//$scope.add = add;
+
+				//function add() {
+				//	$scope.courses.push({name: 'Curso Exemplo', teacher: 'Prof Exemplo'})  
+				//}
+			}
+
+			courseController.$inject = ['$scope'];
+				
+	</script>
+</body>
+</html>
